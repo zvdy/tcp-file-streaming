@@ -11,6 +11,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/hashicorp/consul/api"
 )
 
 type FileServer struct {
@@ -18,6 +20,11 @@ type FileServer struct {
 }
 
 func (fs *FileServer) Start() {
+	err := fs.registerService()
+	if err != nil {
+		log.Fatal("Failed to register service:", err)
+	}
+
 	ln, err := net.Listen("tcp", fs.Port)
 	fmt.Println("Server started on", fs.Port)
 	if err != nil {
@@ -90,4 +97,21 @@ func (fs *FileServer) handleConnection(conn net.Conn) {
 		// Close the connection
 		return
 	}
+}
+
+func (fs *FileServer) registerService() error {
+	config := api.DefaultConfig()
+	client, err := api.NewClient(config)
+	if err != nil {
+		return err
+	}
+
+	registration := new(api.AgentServiceRegistration)
+	registration.ID = "file-server-1"
+	registration.Name = "file-server"
+	registration.Port = 8080
+	registration.Tags = []string{"tcp", "file", "server"}
+	registration.Address = "localhost"
+
+	return client.Agent().ServiceRegister(registration)
 }
