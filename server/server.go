@@ -93,9 +93,6 @@ func (fs *FileServer) handleConnection(conn net.Conn) {
 			log.Println("Error notifying client:", err)
 			return
 		}
-
-		// Close the connection
-		return
 	}
 }
 
@@ -106,12 +103,35 @@ func (fs *FileServer) registerService() error {
 		return err
 	}
 
+	// Get the container's IP address
+	ip, err := getContainerIP()
+	if err != nil {
+		return err
+	}
+
 	registration := new(api.AgentServiceRegistration)
-	registration.ID = "file-server-1"
+	registration.ID = fmt.Sprintf("file-server-%s", ip)
 	registration.Name = "file-server"
 	registration.Port = 8080
 	registration.Tags = []string{"tcp", "file", "server"}
-	registration.Address = "localhost"
+	registration.Address = ip
 
 	return client.Agent().ServiceRegister(registration)
+}
+
+func getContainerIP() (string, error) {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return "", err
+	}
+
+	for _, addr := range addrs {
+		if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				return ipnet.IP.String(), nil
+			}
+		}
+	}
+
+	return "", fmt.Errorf("no IP address found")
 }

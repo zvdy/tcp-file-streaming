@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  consul:
+    build:
+      context: ./consul
+      dockerfile: Dockerfile
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - consul
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - consul
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
