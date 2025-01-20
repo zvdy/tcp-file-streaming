@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	err := client.SendFile(300000) // Specify the file size you want to send
+	err := client.SendFile(3000000) // Specify the file size you want to send
 	if err != nil {
 		log.Fatal(err)
 	}

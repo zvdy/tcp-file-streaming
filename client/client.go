@@ -19,6 +19,7 @@ func SendFile(size int) error {
 	if err != nil {
 		return err
 	}
+	defer conn.Close()
 
 	binary.Write(conn, binary.LittleEndian, int64(size))
 	n, err := io.CopyN(conn, bytes.NewReader(file), int64(size))
@@ -26,6 +27,22 @@ func SendFile(size int) error {
 		return err
 	}
 
-	fmt.Printf("Sending %d bytes over the network.\n", n)
+	fmt.Printf("Sent %d bytes\n", n)
+
+	// Wait for the server to notify that it has finished processing
+	buf := make([]byte, 4)
+	_, err = conn.Read(buf)
+	if err != nil {
+		if err == io.EOF {
+			fmt.Println("Server closed the connection")
+			return nil
+		}
+		return err
+	}
+
+	if string(buf) == "done" {
+		fmt.Println("Server finished processing")
+	}
+
 	return nil
 }
