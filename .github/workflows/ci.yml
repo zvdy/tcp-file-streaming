@@ -23,14 +23,3 @@ jobs:
 
     - name: Run tests
       run: go test ./...
-
-    - name: Create Pull Request
-      if: github.ref != 'refs/heads/main'
-      uses: peter-evans/create-pull-request@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: Automated test successful
-        branch: automated/test-success
-        title: Automated Test Success
-        body: |
-          This PR was created automatically because the tests passed successfully.
