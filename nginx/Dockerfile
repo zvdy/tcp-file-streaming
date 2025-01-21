@@ -19,5 +19,5 @@ EXPOSE 80
 # Command to run Consul and Nginx
 CMD ["sh", "-c", "consul agent -dev -client=0.0.0.0 -join=consul & \
     sleep 10 && \
-    curl --request PUT --data '{\"Name\": \"nginx\", \"Port\": 80}' http://consul:8500/v1/agent/service/register && \
+    curl --request PUT --data '{\"Name\": \"nginx\", \"Port\": 80, \"Tags\": [\"load-balancer\", \"nginx\", \"reverse-proxy\"]}' http://consul:8500/v1/agent/service/register && \
     nginx -g 'daemon off;'"]
