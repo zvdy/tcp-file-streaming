@@ -25,8 +25,9 @@ WORKDIR /app
 # Copy the built Go app from the builder stage
 COPY --from=builder /app/app ./
 
-# Expose port 8080
+# Expose ports 8080 and 8081
 EXPOSE 8080
+EXPOSE 8081
 
 # Command to run the executable
 CMD ["./app"]
