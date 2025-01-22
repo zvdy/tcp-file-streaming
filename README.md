@@ -59,6 +59,8 @@ Consul is used for service discovery and health checks. It helps manage the serv
 
 ### Running the Service
 
+> Alternatively you can generate a crt and key in order to use https, bear in mind that curl would need the -k flag in order to work.
+
 1. **Check the health of the Golang HTTP Service**:
 
     ```sh
