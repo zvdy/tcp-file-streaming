@@ -1,5 +1,7 @@
 # TCP File Streaming Service
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/zvdy/tcp-file-streaming)](https://goreportcard.com/report/github.com/zvdy/tcp-file-streaming)
+
 This project is a TCP file streaming service designed to handle file transfers over a network. It includes several components that work together to provide a robust and scalable solution for streaming files.
 
 ## Components
@@ -56,6 +58,8 @@ Consul is used for service discovery and health checks. It helps manage the serv
     ```
 
 ### Running the Service
+
+> Alternatively you can generate a crt and key in order to use https, bear in mind that curl would need the -k flag in order to work.
 
 1. **Check the health of the Golang HTTP Service**:
 
