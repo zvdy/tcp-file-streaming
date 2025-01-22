@@ -1,5 +1,7 @@
 # TCP File Streaming Service
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/zvdy/tcp-file-streaming)](https://goreportcard.com/report/github.com/zvdy/tcp-file-streaming)
+
 This project is a TCP file streaming service designed to handle file transfers over a network. It includes several components that work together to provide a robust and scalable solution for streaming files.
 
 ## Components
