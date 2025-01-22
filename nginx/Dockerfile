@@ -13,8 +13,13 @@ RUN apt-get update && \
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
+# Copy the self-signed certificate and key
+COPY tls/nginx.crt /etc/nginx/ssl/nginx.crt
+COPY tls/nginx.key /etc/nginx/ssl/nginx.key
+
+# Expose ports 80 and 443
 EXPOSE 80
+EXPOSE 443
 
 # Command to run Consul and Nginx
 CMD ["sh", "-c", "consul agent -dev -client=0.0.0.0 -join=consul & \
