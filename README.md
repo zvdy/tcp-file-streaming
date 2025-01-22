@@ -39,7 +39,7 @@ Consul is used for service discovery and health checks. It helps manage the serv
 1. **Clone the repository**:
 
     ```sh
-    git clone https://github.com/zvdy/tcp-file-streaming-service.git
+    git clone https://github.com/zvdy/tcp-file-streaming.git
     cd tcp-file-streaming-service
     ```
 

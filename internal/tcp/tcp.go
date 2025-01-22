@@ -1,4 +1,4 @@
-package server
+package tcp
 
 import (
 	"bytes"
@@ -28,11 +28,11 @@ func (ts *TCPServer) Start() {
 			log.Println("Error accepting connection:", err)
 			continue
 		}
-		go HandleConnection(conn)
+		go handleConnection(conn)
 	}
 }
 
-func HandleConnection(conn net.Conn) {
+func handleConnection(conn net.Conn) {
 	defer conn.Close()
 	buf := new(bytes.Buffer)
 	for {
