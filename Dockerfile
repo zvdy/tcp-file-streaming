@@ -10,11 +10,12 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy the source code into the container
+COPY ./cmd ./cmd
+COPY ./internal ./internal
 COPY ./server ./server
-COPY ./main.go ./main.go
 
 # Build the Go app
-RUN go build -o app .
+RUN go build -o app ./cmd/main.go
 
 # Use a smaller base image for the final container
 FROM alpine:latest
