@@ -32,9 +32,9 @@ Consul is used for service discovery and health checks. It helps manage the serv
 
 ### Requirements
 
-- Docker[https://www.docker.com/get-started/]
-- Docker Compose[https://docs.docker.com/compose/]
-- curl[https://curl.se/]
+- [Docker](https://www.docker.com/get-started/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [curl](https://curl.se/)
 
 ### Setup
 
